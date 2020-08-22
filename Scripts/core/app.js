@@ -1,7 +1,8 @@
 /*File name : app.ts
   Author's name : Seyeong Park
   Web site name : SY's Slot Machine
-  File description: This is main TypeScript file for slot machine*/
+  File description: This is Javascript file for slot machine*/
+
 (function () {
     // Set player's set
     let playerMoney = 1000;
