@@ -1,0 +1,19 @@
+/*File name : app.css
+  Author's name : Seyeong Park
+  Web site name : SY's Slot Machine
+  File description: This is app.css file for design of slot machine*/
+  
+
+/* custom css lives here */
+
+body
+{
+    background-color: lightgray;
+}
+
+#canvas
+{
+    margin-left: 10px;
+    background-color: white;
+    border: 1px dotted black;
+}
