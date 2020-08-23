@@ -4,7 +4,7 @@
   File description: This is main TypeScript file for slot machine*/
 (function () {
     // Set player's set
-    let playerMoney = 1000;
+    let playerMoney = 2000;
     let winnings = 0;
     let jackpot = 777;
     let playerBet = 0;
@@ -87,7 +87,7 @@
     }
     /* Utility function to reset the player stats */
     function resetAll() {
-        playerMoney = 1000;
+        playerMoney = 2000;
         winnings = 0;
         jackpot = 777;
         playerBet = 0;

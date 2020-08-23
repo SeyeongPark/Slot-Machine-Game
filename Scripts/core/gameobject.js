@@ -2,7 +2,7 @@
   Author's name : Seyeong Park
   Web site name : SY's Slot Machine
   File description: This is TypeScript file for objects of the game */
-let Core;
+var Core;
 (function (Core) {
     class GameObject extends createjs.Bitmap {
         // CONSTRUCTOR(S)
