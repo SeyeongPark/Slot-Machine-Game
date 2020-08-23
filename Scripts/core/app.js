@@ -1,8 +1,7 @@
 /*File name : app.ts
   Author's name : Seyeong Park
   Web site name : SY's Slot Machine
-  File description: This is Javascript file for slot machine*/
-
+  File description: This is main TypeScript file for slot machine*/
 (function () {
     // Set player's set
     let playerMoney = 1000;
@@ -164,9 +163,9 @@
     /* When this function is called it determines the betLine results.
     e.g. Bar - Orange - Banana */
     function Reels() {
-        var betLine = [" ", " ", " "];
-        var outCome = [0, 0, 0];
-        for (var spin = 0; spin < 3; spin++) {
+        let betLine = [" ", " ", " "];
+        let outCome = [0, 0, 0];
+        for (let spin = 0; spin < 3; spin++) {
             outCome[spin] = Math.floor((Math.random() * 101) + 1);
             switch (outCome[spin]) {
                 case checkRange(outCome[spin], 1, 27): // 3.74% probability

@@ -186,10 +186,10 @@
     /* When this function is called it determines the betLine results.
     e.g. Bar - Orange - Banana */
     function Reels():string[] {
-        var betLine = [" ", " ", " "];
-        var outCome = [0, 0, 0];
+        let betLine = [" ", " ", " "];
+        let outCome = [0, 0, 0];
 
-        for (var spin = 0; spin < 3; spin++) {
+        for (let spin = 0; spin < 3; spin++) {
             outCome[spin] = Math.floor((Math.random() * 101) + 1);
             switch (outCome[spin]) {
                 case checkRange(outCome[spin], 1, 27):  // 3.74% probability
