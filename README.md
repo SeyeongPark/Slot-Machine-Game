@@ -1,5 +1,2 @@
-# COMP125-M2020-Assignment4
-# COMP125-Assignment4
-# COMP125-Assignment4
-# COMP125-Assignment4
-# COMP125-Assignment4
+# Slot Machine Game (2022)
+
