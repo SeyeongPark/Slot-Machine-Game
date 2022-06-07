@@ -4,9 +4,7 @@
   File description: This is main TypeScript file for slot machine*/
 
 (function(){
-
-    // Set player's set
-    let playerMoney = 2000;
+    let playerMoney = 5000;
     let winnings = 0;
     let jackpot = 777;
     let playerBet = 0;
@@ -38,35 +36,27 @@
     let grapes = 0;
     let bananas = 0;
     let oranges = 0;
-    let cherries = 0;
-    let bars = 0;
     let bells = 0;
     let sevens = 0;
-    let blanks = 0
-    let pyths = 0;
-    let htmlfis = 0;
-    let jscris = 0;
-    let csss = 0;
+    let pys = 0;
+    let htmls = 0;
+    let jss = 0;
 
     let manifest: Core.Item[] = [
         {id:"background", src:"./Assets/images/background.png"},
         {id:"banana", src:"./Assets/images/banana.gif"},
-        {id:"bar", src:"./Assets/images/bar.gif"},
         {id:"bell", src:"./Assets/images/bell.gif"},
         {id:"bet_line", src:"./Assets/images/bet_line.gif"},
         {id:"bet1Button", src:"./Assets/images/bet1Button.png"},
         {id:"bet10Button", src:"./Assets/images/bet10Button.png"},
         {id:"bet100Button", src:"./Assets/images/bet100Button.png"},
         {id:"betMaxButton", src:"./Assets/images/betMaxButton.png"},
-        {id:"blank", src:"./Assets/images/blank.gif"},
-        {id:"cherry", src:"./Assets/images/cherry.gif"},
         {id:"grapes", src:"./Assets/images/grapes.gif"},
         {id:"orange", src:"./Assets/images/orange.gif"},
         {id:"seven", src:"./Assets/images/seven.gif"},
         {id:"pyth", src:"./Assets/images/pyth.gif"},
         {id:"htmlfi", src:"./Assets/images/htmlfi.gif"},
         {id:"jscri", src:"./Assets/images/jscri.gif"},
-        {id:"css", src:"./Assets/images/css.gif"},
         {id: "resetButton", src: "./Assets/images/resetButton.png" },
         {id: "stopButton", src: "./Assets/images/stopIcon.png" },
         {id: "spinButton", src:"./Assets/images/spinButton.png"},
@@ -81,51 +71,41 @@
         grapes = 0;
         bananas = 0;
         oranges = 0;
-        cherries = 0;
-        bars = 0;
         bells = 0;
         sevens = 0;
-        blanks = 0;
-        pyths = 0;
-        htmlfis = 0;
-        jscris = 0;
-        csss = 0;
+        pys = 0;
+        htmls = 0;
+        jss = 0;
         }
         /* Utility function to reset the player stats */
         function resetAll():void {
-        playerMoney = 2000;
+        playerMoney = this.playerMoney;
         winnings = 0;
-        jackpot = 777;
+        jackpot = this.jackpot;
         playerBet = 0;
         }
 
-    /* Check to see if the player won the jackpot */
-    function checkJackPot() {
-        /* compare two random values */
-        let jackPotTry = Math.floor(Math.random() * 50 + 1);
-        let jackPotWin = Math.floor(Math.random() * 50 + 1);
-        if (jackPotTry == jackPotWin) {
-            jackpot = 777;
-            playerMoney += jackpot;
-            alert("You Won the $" + jackpot + " Jackpot!!");
-            console.log("******************************");
-            console.log("*** Jacktop! You won $ "+ jackpot+" ***");
-            console.log("******************************");
-            // checking to have : update the message label
-        }
-    }
-
     /* Utility function to show a win message and increase player money */
-    function showWinMessage():void {
+    function showWinMessage(object):void {
         playerMoney += winnings;
-        resultLabel.text="You Won: $ "+ winnings;
-        console.log("                You won $ " + winnings );
+        resultLabel.text="You Won: $ " + winnings;
+        if(winnings == 0){
+            console.log("     Sorry, you lose. Try again");
+        }
+        if(object == "sevens"){
+            console.log("******************************");
+            console.log("*** Jacktop! You won $ " + jackpot + " ***");
+            console.log("*** ( Betting * 50 + 777 ) ***");
+            console.log("******************************");
+        }
+        else{
+            console.log("You won $ " + winnings + ' from 3 ' + object );
+        }
         creditLabel.text=playerMoney.toString();
 
         createjs.Sound.play("checking");
         winningsLabel.text=winnings.toString();
         resetReelTally();
-        checkJackPot();
     }
     /* Utility function to show a lose message and increase player money */
     function showLossMessage():void {
@@ -135,7 +115,6 @@
         creditLabel.text=playerMoney.toString();
 
         resetReelTally();
-        checkJackPot();
     }    
     
     // This function triggers first and "Preloads" all the assets
@@ -190,57 +169,43 @@
         let outCome = [0, 0, 0];
 
         for (let spin = 0; spin < 3; spin++) {
-            outCome[spin] = Math.floor((Math.random() * 101) + 1);
+            outCome[spin] = Math.floor((Math.random() * 100)+1);
             switch (outCome[spin]) {
-                case checkRange(outCome[spin], 1, 27):  // 3.74% probability
-                    betLine[spin] = "blank";
-                    blanks++;
-                    break;
-                case checkRange(outCome[spin], 28, 37): // 11.2% probability
+                case checkRange(outCome[spin], 0, 20): // 20% probability
                     betLine[spin] = "grapes";
                     grapes++;
                     break;
-                case checkRange(outCome[spin], 38, 46): // 12.6% probability
+                case checkRange(outCome[spin], 21, 40): // 20% probability
                     betLine[spin] = "banana";
                     bananas++;
                     break;
-                case checkRange(outCome[spin], 47, 54): // 0.07% probability
+                case checkRange(outCome[spin], 41, 60): // 20% probability
                     betLine[spin] = "orange";
                     oranges++;
                     break;
-                case checkRange(outCome[spin], 55, 59): // 0.04% probability
-                    betLine[spin] = "cherry";
-                    cherries++;
-                    break;
-                case checkRange(outCome[spin], 60, 62): //  0.02% probability
-                    betLine[spin] = "bar";
-                    bars++;
-                    break;
-                case checkRange(outCome[spin], 63, 64): //  0.01% probability
+            
+                case checkRange(outCome[spin], 61, 67): //  7% probability
                     betLine[spin] = "bell";
                     bells++;
                     break;
-                case checkRange(outCome[spin], 65, 65): //  1.01% probability
+                case checkRange(outCome[spin], 68, 70): //  3% probability
                     betLine[spin] = "seven";
                     sevens++;
                     break;
+                    
                 //additional Reels
-                case checkRange(outCome[spin], 66, 74): // 12.6% probability
+                case checkRange(outCome[spin], 71, 80): // 10% probability
                     betLine[spin] = "pyth";
-                    pyths++;
+                    pys++;
                     break;
-                case checkRange(outCome[spin], 75, 83): // 12.6% probability
+                case checkRange(outCome[spin], 81, 90): // 10% probability
                     betLine[spin] = "htmlfi";
-                    htmlfis++;
+                    htmls++;
                     break;
-                case checkRange(outCome[spin], 84, 92): // 12.6% probability
+                case checkRange(outCome[spin], 91, 100): // 10% probability
                     betLine[spin] = "jscri";
-                    jscris++;
+                    jss++;
                     break;
-                case checkRange(outCome[spin], 93, 101):// 12.6% probability
-                    betLine[spin] = "css";
-                    csss++;
-                    break;    
             }
         }
         return betLine;
@@ -248,90 +213,43 @@
 
     /* This function calculates the player's winnings, if any */
     function determineWinnings() {
-        if (blanks == 0) {
+        let object;
             if (grapes == 3) {
                 winnings = playerBet * 10;
+                object = 'grapes';
             }
             else if (bananas == 3) {
-                winnings = playerBet * 20;
+                winnings = playerBet * 10;
+                object = 'bananas';
             }
             else if (oranges == 3) {
-                winnings = playerBet * 30;
-            }
-            else if (cherries == 3) {
-                winnings = playerBet * 40;
-            }
-            else if (bars == 3) {
-                winnings = playerBet * 50;
+                winnings = playerBet * 10;
+                object = 'oranges';
             }
             else if (bells == 3) {
-                winnings = playerBet * 10;
+                winnings = playerBet * 20;
+                object = 'bells';
             }
             else if (sevens == 3) {
-                winnings = playerBet * 10;
+                winnings = playerBet * 50 + 777;
+                object = 'sevens';
             }
-            else if (pyths == 3) {
-                winnings = playerBet * 10;
+            else if (pys == 3) {
+                winnings = playerBet * 30;
+                object = 'Pythons';
             }
-            else if (htmlfis == 3) {
-                winnings = playerBet * 12;
+            else if (htmls == 3) {
+                winnings = playerBet * 30;
+                object = 'HTMLs';
             }
-            else if (jscris == 3) {
-                winnings = playerBet * 10;
+            else if (jss == 3) {
+                winnings = playerBet * 30;
+                object = 'JSs';
             }
-            else if (csss == 3) {
-                winnings = playerBet * 15;
+            else {
+                playerMoney -= playerBet;
             }
-            else if (grapes == 2) {
-                winnings = playerBet * 2;
-            }
-            else if (bananas == 2) {
-                winnings = playerBet * 3;
-            }
-            else if (oranges == 2) {
-                winnings = playerBet * 3;
-            }
-            else if (cherries == 2) {
-                winnings = playerBet * 4;
-            }
-            else if (bars == 2) {
-                winnings = playerBet * 7;
-            }
-            else if (bells == 2) {
-                winnings = playerBet * 8;
-            }
-            else if (sevens == 2) {
-                winnings = playerBet * 6;
-            }
-            else if (pyths == 2) {
-                winnings = playerBet * 5;
-            }
-            else if (htmlfis == 2) {
-                winnings = playerBet * 4;
-            }
-            else if (jscris == 2) {
-                winnings = playerBet * 5;
-            }
-            else if (csss == 2) {
-                winnings = playerBet * 4;
-            }
-            else if (pyths == 1) {
-                winnings = playerBet * 1;
-            }
-            else if (htmlfis == 1) {
-                winnings = playerBet * 2;
-            }
-            else if (jscris == 1) {
-                winnings = playerBet * 1;
-            }
-            else if (csss == 1) {
-                winnings = playerBet * 2;
-            }
-            showWinMessage();
-        }
-        else {
-            showLossMessage();
-        }
+            showWinMessage(object);
     }
 
     function buildInterface():void
@@ -365,7 +283,7 @@
         jackPotLabel = new UIObjects.Label("777", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X+1, Config.Screen.CENTER_Y - 172, true);
         stage.addChild(jackPotLabel);
 
-        creditLabel = new UIObjects.Label("2000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
+        creditLabel = new UIObjects.Label(playerMoney.toString(), "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(creditLabel);
 
         winningsLabel = new UIObjects.Label("-", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
@@ -375,7 +293,7 @@
         stage.addChild(betLabel);
 
         // Reel GameObjects
-        leftReel = new Core.GameObject("css", Config.Screen.CENTER_X - 86, Config.Screen.CENTER_Y - 12, true);
+        leftReel = new Core.GameObject("orange", Config.Screen.CENTER_X - 86, Config.Screen.CENTER_Y - 12, true);
         stage.addChild(leftReel);
 
         middleReel = new Core.GameObject("seven", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 12, true);
@@ -476,9 +394,6 @@
                     // play sound after it is clikcked
                     createjs.Sound.play("coin");     
                 }
-                else
-                {
-                }
         });
 
         resetButton.on("click", () => {    
@@ -526,7 +441,7 @@
             }
         }); 
         reloadButton.on("click", ()=>{
-            location.reload(true);
+            location.reload();
             location.href = location.href;
             history.go(0);
         });
