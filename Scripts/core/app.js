@@ -3,24 +3,24 @@
   Web site name : SY's Slot Machine
   File description: This is main TypeScript file for slot machine*/
 (function () {
-    let playerMoney = 5000;
+    let playerMoney = 1000;
     let winnings = 0;
     let jackpot = 777;
     let playerBet = 0;
     // Function scoped Variables
-    let stage, assets, slotMachineBackground;
+    let stage;
+    let assets;
+    let slotMachineBackground;
     let bet1Button, bet10Button, bet100Button, betMaxButton;
     let spinButton, resetButton, stopButton, reloadButton;
     let jackPotLabel, creditLabel, winningsLabel, betLabel;
-    let leftReel, middleReel, rightReel;
-    let betLine, resultLabel, InfoReloadLabel;
-
+    let leftReel, middleReel, rightReel, betLine;
+    let resultLabel, InfoReloadLabel, ratingInfoLabel;
     // symbol tallies
     let grapes, bananas, oranges, bells, sevens, pys, htmls, jss = 0;
-
     let manifest = [
-        { id: "background", src: "./Assets/images/background.png"},
-        { id: "banana", src: "./Assets/images/banana.gif"},
+        { id: "background", src: "./Assets/images/background.png" },
+        { id: "banana", src: "./Assets/images/banana.gif" },
         { id: "bell", src: "./Assets/images/bell.gif" },
         { id: "bet_line", src: "./Assets/images/bet_line.gif" },
         { id: "bet1Button", src: "./Assets/images/bet1Button.png" },
@@ -46,7 +46,7 @@
         grapes = 0;
         bananas = 0;
         oranges = 0;
-        bells = 0
+        bells = 0;
         sevens = 0;
         pys = 0;
         htmls = 0;
@@ -64,7 +64,7 @@
         playerMoney += winnings;
         resultLabel.text = "You Won: $ " + winnings;
         if (winnings == 0) {
-            console.log("Sorry, you lose $" + playerBet + ". Try again");
+            console.log("Sorry, you lose $ " + playerBet + ". Try again");
         }
         else if (object == "sevens") {
             console.log("******************************");
@@ -78,14 +78,6 @@
         creditLabel.text = playerMoney.toString();
         createjs.Sound.play("checking");
         winningsLabel.text = winnings.toString();
-        resetReelTally();
-    }
-    /* Utility function to show a lose message and increase player money */
-    function showLossMessage() {
-        playerMoney -= playerBet;
-        resultLabel.text = ("You Lost, Try again");
-        console.log("You lost $ " + playerBet);
-        creditLabel.text = playerMoney.toString();
         resetReelTally();
     }
     // This function triggers first and "Preloads" all the assets
@@ -182,7 +174,7 @@
             object = 'oranges';
         }
         else if (bells == 3) {
-            winnings = playerBet * 20;
+            winnings = playerBet * 40;
             object = 'bells';
         }
         else if (sevens == 3) {
@@ -228,7 +220,7 @@
         reloadButton = new UIObjects.Button("reloadButton", Config.Screen.CENTER_X - 250, Config.Screen.CENTER_Y - 30, true);
         stage.addChild(reloadButton);
         // Labels
-        resultLabel = new UIObjects.Label("Click SPIN button", "40px", "cursive", "#D4AF37", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 310, true);
+        resultLabel = new UIObjects.Label("Click SPIN button", "40px", "cursive", "#D4AF37", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 280, true);
         stage.addChild(resultLabel);
         jackPotLabel = new UIObjects.Label("777", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 1, Config.Screen.CENTER_Y - 172, true);
         stage.addChild(jackPotLabel);
@@ -238,6 +230,8 @@
         stage.addChild(winningsLabel);
         betLabel = new UIObjects.Label("-", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 14, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(betLabel);
+        ratingInfoLabel = new UIObjects.Label("Fruits (20% : bet * 10) \nBells (7% : bet * 40) \nSevens (2% : bet * 50 + 777) \nProgramming Languages (10% : bet * 30),", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 180, Config.Screen.CENTER_Y - 360, true);
+        stage.addChild(ratingInfoLabel);
         // Reel GameObjects
         leftReel = new Core.GameObject("orange", Config.Screen.CENTER_X - 86, Config.Screen.CENTER_Y - 12, true);
         stage.addChild(leftReel);
@@ -265,7 +259,7 @@
             rightReel.image = assets.getResult(reels[2]);
             if (playerMoney == 0) {
                 if (confirm("You ran out of Money! \nDo you want to play again?")) {
-                    resetAll();
+                    location.reload();
                     resetReelTally();
                     console.log("----------------------------");
                 }

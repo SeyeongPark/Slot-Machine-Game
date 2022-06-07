@@ -4,43 +4,30 @@
   File description: This is main TypeScript file for slot machine*/
 
 (function(){
-    let playerMoney = 5000;
+    let playerMoney = 1000;
     let winnings = 0;
     let jackpot = 777;
     let playerBet = 0;
 
     // Function scoped Variables
     let stage: createjs.Stage;
+
     let assets: createjs.LoadQueue;
+
     let slotMachineBackground: Core.GameObject;
-    let spinButton: UIObjects.Button;
-    let bet1Button: UIObjects.Button;
-    let bet10Button: UIObjects.Button;
-    let bet100Button: UIObjects.Button;
-    let betMaxButton: UIObjects.Button;
-    let resetButton: UIObjects.Button;
-    let stopButton: UIObjects.Button;
-    let reloadButton: UIObjects.Button;
-    let jackPotLabel: UIObjects.Label;
-    let creditLabel: UIObjects.Label;
-    let winningsLabel: UIObjects.Label;
-    let betLabel: UIObjects.Label;
-    let leftReel: Core.GameObject;
-    let middleReel: Core.GameObject;
-    let rightReel: Core.GameObject;
-    let betLine: Core.GameObject;
-    let resultLabel: UIObjects.Label;   
-    let InfoReloadLabel:  UIObjects.Label;  
+
+    let bet1Button, bet10Button, bet100Button, betMaxButton: UIObjects.Button;
+
+    let spinButton, resetButton, stopButton, reloadButton: UIObjects.Button;
+
+    let jackPotLabel, creditLabel, winningsLabel, betLabel: UIObjects.Label;
+
+    let leftReel, middleReel, rightReel, betLine: Core.GameObject;
+
+    let resultLabel, InfoReloadLabel, ratingInfoLabel:  UIObjects.Label;  
 
     // symbol tallies
-    let grapes = 0;
-    let bananas = 0;
-    let oranges = 0;
-    let bells = 0;
-    let sevens = 0;
-    let pys = 0;
-    let htmls = 0;
-    let jss = 0;
+    let grapes, bananas, oranges, bells, sevens, pys, htmls, jss = 0;
 
     let manifest: Core.Item[] = [
         {id:"background", src:"./Assets/images/background.png"},
@@ -90,9 +77,9 @@
         playerMoney += winnings;
         resultLabel.text="You Won: $ " + winnings;
         if(winnings == 0){
-            console.log("     Sorry, you lose. Try again");
+            console.log("Sorry, you lose $ " + playerBet + ". Try again");
         }
-        if(object == "sevens"){
+        else if(object == "sevens"){
             console.log("******************************");
             console.log("*** Jacktop! You won $ " + jackpot + " ***");
             console.log("*** ( Betting * 50 + 777 ) ***");
@@ -107,15 +94,6 @@
         winningsLabel.text=winnings.toString();
         resetReelTally();
     }
-    /* Utility function to show a lose message and increase player money */
-    function showLossMessage():void {
-        playerMoney -= playerBet;
-        resultLabel.text=("You Lost, Try again");
-        console.log("You lost $ "+playerBet);
-        creditLabel.text=playerMoney.toString();
-
-        resetReelTally();
-    }    
     
     // This function triggers first and "Preloads" all the assets
     function Preload()
@@ -227,7 +205,7 @@
                 object = 'oranges';
             }
             else if (bells == 3) {
-                winnings = playerBet * 20;
+                winnings = playerBet * 40;
                 object = 'bells';
             }
             else if (sevens == 3) {
@@ -277,7 +255,7 @@
         stage.addChild(reloadButton);
 
         // Labels
-        resultLabel = new UIObjects.Label("Click SPIN button" , "40px", "cursive", "#D4AF37", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 310, true);
+        resultLabel = new UIObjects.Label("Click SPIN button" , "40px", "cursive", "#D4AF37", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 280, true);
         stage.addChild(resultLabel);   
 
         jackPotLabel = new UIObjects.Label("777", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X+1, Config.Screen.CENTER_Y - 172, true);
@@ -291,6 +269,9 @@
 
         betLabel = new UIObjects.Label("-", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X-14, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(betLabel);
+
+        ratingInfoLabel = new UIObjects.Label("Fruits (20% : bet * 10) \nBells (7% : bet * 40) \nSevens (2% : bet * 50 + 777) \nProgramming Languages (10% : bet * 30),", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 180, Config.Screen.CENTER_Y -360, true);
+        stage.addChild(ratingInfoLabel);
 
         // Reel GameObjects
         leftReel = new Core.GameObject("orange", Config.Screen.CENTER_X - 86, Config.Screen.CENTER_Y - 12, true);
@@ -328,7 +309,7 @@
             if (playerMoney == 0)
             {
                 if (confirm("You ran out of Money! \nDo you want to play again?")) {                    
-                resetAll();
+                location.reload();
                 resetReelTally();  
                 console.log("----------------------------");
                 }
